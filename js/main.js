@@ -11,10 +11,13 @@ function saveBookmark(e) {
     return false;
   }
 
+  checkBookmarks();
+
   var bookmark = {
     name: siteName,
     url: siteUrl
   }
+
 // Test if bookmarks is null
 if (localStorage.getItem('bookmarks') === null) {
   // Init array
@@ -22,9 +25,10 @@ if (localStorage.getItem('bookmarks') === null) {
   // Add to array
   bookmarks.push(bookmark);
   // Set to localStorage
+
   localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 
-} else {
+  } else {
   // Get bookmarks from localStorage
   var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
   // Add bookmark to array
@@ -33,10 +37,9 @@ if (localStorage.getItem('bookmarks') === null) {
   localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 }
 
+
 // Clear form
   document.getElementById('myForm').reset();
-
-  checkBookmarks();
 
   // Re-fetch bookmarks
   fetchBookmarks();
@@ -64,21 +67,34 @@ function deleteBookmark(url){
 
 }
 
-function checkBookmarks(){
+// Function that prevents adding a bookmark two times
+function checkBookmarks(e){
   // Get bookmarks from localStorage
   var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-  if(siteName === bookmarks[i].name && siteUrl === bookmarks[i].url){
-    alert('This site has already been added to bookmarks!');
+  var checkSite = document.getElementById('siteName').value;
+  var checkUrl = document.getElementById('siteUrl').value;
+
+  for(var i = 0; i < bookmarks.length; i++){
+    if(bookmarks[i].name === checkSite && bookmarks[i].url === checkUrl){
+      alert('This site has already been added to bookmarks!');
+      bookmarks.pop(bookmark);
+    }
   }
+  return false;
+
+  e.preventDefault();
+
 }
 
 // Fetch bookmarks
 function fetchBookmarks() {
+
   // Get bookmarks from localStorage
   var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
 
   // Get output id
   var bookmarksResults = document.getElementById('bookmarksResults');
+
 
   // Build our output
   bookmarksResults.innerHTML = '';
