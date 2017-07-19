@@ -1,3 +1,3 @@
 # A simple JavaScript Bookmark Application
 
-This site was built using [GitHub Pages](https://pages.github.com/).
+Coded by [Balazs Gal](https://www.freecodecamp.com/galbalazs87). :+1
